@@ -1,0 +1,4 @@
+---
+- name: Remove node from Swarm
+  shell: docker swarm leave -f
+  ignore_errors: true

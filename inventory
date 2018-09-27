@@ -1,0 +1,5 @@
+[master]
+rpi-master.local
+
+[workers]
+rpi-[01:01].local

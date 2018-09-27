@@ -1,0 +1,9 @@
+- name: Configure Swarm master
+  hosts: master
+  roles:
+    - master-node
+
+- name: Configure Swarm worker nodes
+  hosts: workers
+  roles:
+    - worker-node

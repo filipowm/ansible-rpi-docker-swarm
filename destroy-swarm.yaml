@@ -1,0 +1,5 @@
+- name: Configure Swarm master
+  hosts: all
+  connection: local
+  roles:
+    - leave-swarm
