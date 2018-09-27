@@ -1,0 +1,20 @@
+- name: Create all directories
+  file: path=/app/portainer/nginx state=directory mode=0755
+
+- name: Copy docker-compose file
+  copy:
+    src: docker-compose.yaml
+    dest: /app/portainer/docker-compose.yaml
+    mode: 0600
+
+- name: Copy nginx directory
+  copy:
+    src: nginx/
+    dest: /app/portainer/nginx/
+    mode: 0600
+
+- name: Build portainer-proxy image
+  shell: 'docker build -t portainer-proxy /app/portainer/nginx'
+
+- name: Deploy portainer stack
+  shell: 'docker stack deploy -c /app/portainer/docker-compose.yaml portainer'

@@ -1,7 +1,9 @@
 - name: Configure Swarm master
   hosts: master
+  become: yes
   roles:
     - master-node
+    - portainer
 
 - name: Configure Swarm worker nodes
   hosts: workers
