@@ -1,35 +1,19 @@
 version: '3.6'
-
 services:
-  nginx_proxy:
-    image: portainer-proxy
-    depends_on:
-      - portainer
-    ports:
-      - "80:80"
-    networks:
-      - portainer
-    deploy:
-      replicas: 1
-      placement:
-        constraints: [node.role == manager]
-      restart_policy:
-        condition: on-failure
-        delay: 10s
-        max_attempts: 5
-        window: 120s
-
-  portainer:
+  ui:
     image: portainer/portainer
     command: --host=unix:///var/run/docker.sock #--templates http://templates/templates.json
-    labels:
-      backbone: backbone
     networks:
-      - portainer
+      - traefik
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-#      - /opt/portainer/data:/data TODO add to ansible to create it
+      - /app/portainer/data:/data
     deploy:
+      labels:
+        traefik.port: 9000
+        traefik.backend: portainer
+        traefik.frontend.rule: PathPrefixStrip:/portainer/
+        traefik.docker.network: traefik_net
       replicas: 1
       placement:
         constraints: [node.role == manager]
@@ -58,4 +42,6 @@ services:
 #        window: 120s
 
 networks:
-  portainer:
+  traefik:
+    external: true
+    name: traefik_net
