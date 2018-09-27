@@ -1,4 +1,11 @@
 ---
+- name: Delete stacks
+  shell: "docker stack rm '{{ item }}'"
+  with_items:
+    - portainer
+    - traefik
+  ignore_errors: true
+
 - name: Remove node from Swarm
   shell: docker swarm leave -f
   ignore_errors: true
