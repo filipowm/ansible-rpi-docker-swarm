@@ -1,0 +1,5 @@
+traefik_port: 80
+
+traefik_volume: /app/traefik
+traefik_image: traefik
+traefik_image_tag: latest

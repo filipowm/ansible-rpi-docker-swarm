@@ -1,17 +1,23 @@
 - name: Create traefik app directory
-  file: path=/app/traefik state=directory mode=0755
+  file:
+    path: "{{ traefik_volume }}"
+    state: directory
+    mode: 0755
 
 - name: Create Volume directories
-  file: "path=/Volumes/traefik/{{ item }} state=directory mode=0755"
+  file:
+    path: "{{ traefik_volume }}/{{ item }}"
+    state: directory
+    mode: 0755
   with_items:
     - config
     - logs
 
 - name: Copy docker-compose file
-  copy:
+  template:
     src: docker-compose.yaml
-    dest: /app/traefik/docker-compose.yaml
+    dest: "{{ traefik_volume }}/docker-compose.yaml"
     mode: 0600
 
 - name: Deploy traefik stack
-  shell: 'docker stack deploy -c /app/traefik/docker-compose.yaml traefik'
+  shell: "docker stack deploy -c {{ traefik_volume }}/docker-compose.yaml traefik"
