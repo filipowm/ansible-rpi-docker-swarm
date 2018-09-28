@@ -1,0 +1,5 @@
+---
+
+portainer_volume: /app/portainer
+portainer_image: portainer/portainer
+portainer_image_tag: latest
