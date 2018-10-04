@@ -11,4 +11,4 @@
     mode: 0600
 
 - name: Deploy portainer stack
-  shell: "docker stack deploy -c {{ portainer_volume }}/docker-compose.yaml portainer"
+  shell: "docker stack deploy -c {{ portainer_volume }}/docker-compose.yaml --resolve-image never portainer"
